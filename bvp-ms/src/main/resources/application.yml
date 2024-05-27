@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: BreezeVillePark-Management-System
+
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 50MB
+
+server:
+  servlet:
+    context-path: /api/v1/
+
