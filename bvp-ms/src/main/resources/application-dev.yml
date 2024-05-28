@@ -20,4 +20,10 @@ spring:
         format_sql: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+application:
+  security:
+    jwt:
+      secret-key: zkk05T1hHKHxPJcEyvso7rxyJ8MBQaRG
+
+
 
