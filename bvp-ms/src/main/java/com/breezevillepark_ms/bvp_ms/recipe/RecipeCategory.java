@@ -1,19 +1,19 @@
 package com.breezevillepark_ms.bvp_ms.recipe;
 
+import com.breezevillepark_ms.bvp_ms.common.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @Entity
-public class RecipeCategory {
+public class RecipeCategory extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "recipe_category_seq")

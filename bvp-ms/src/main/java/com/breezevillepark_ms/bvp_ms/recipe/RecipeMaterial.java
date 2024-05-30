@@ -1,20 +1,20 @@
 package com.breezevillepark_ms.bvp_ms.recipe;
 
+import com.breezevillepark_ms.bvp_ms.common.BaseEntity;
 import com.breezevillepark_ms.bvp_ms.material.Material;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @Entity
-public class RecipeMaterial {
+public class RecipeMaterial extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "recipe_material_seq")
