@@ -1,5 +1,7 @@
 package com.breezevillepark_ms.bvp_ms.employee;
 
+import com.breezevillepark_ms.bvp_ms.order.Order;
+import com.breezevillepark_ms.bvp_ms.payment.Payment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +10,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
@@ -45,6 +46,14 @@ public class Employee implements UserDetails {
 
     private LocalDateTime dateOfBirth;
 
+    @OneToMany(mappedBy = "employee")
+    private List<Payment> payments;
+
+    @OneToMany(mappedBy = "submittedBy")
+    private List<Order> orders;
+    private Double salary;
+    private List<String> academicQualifications;
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdDate;
@@ -56,7 +65,7 @@ public class Employee implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name())) ;
+        return role.getAuthorities();
     }
 
     @Override
