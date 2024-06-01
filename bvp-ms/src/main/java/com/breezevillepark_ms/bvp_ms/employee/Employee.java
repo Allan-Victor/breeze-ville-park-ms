@@ -12,6 +12,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -38,13 +39,16 @@ public class Employee implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private LocalDateTime joinedDate;
+
+    @Column(unique = true)
     private String nin;
+    private String phoneNumber;
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @OneToMany(mappedBy = "employee")
     private List<Payment> payments;

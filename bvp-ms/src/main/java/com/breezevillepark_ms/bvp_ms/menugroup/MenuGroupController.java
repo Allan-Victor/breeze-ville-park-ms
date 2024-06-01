@@ -39,7 +39,7 @@ public class MenuGroupController {
                                                                             @RequestParam(name = "size", defaultValue = "10") int size){
         return ResponseEntity.ok(service.findAvailableMenuGroups(page, size));
     }
-    
+
 
     @GetMapping("/{menuGroup_title}")
     public ResponseEntity<MenuGroupResponse> getMenuGroupByName(@RequestParam(name = "menuGroup_title") String menuGroupTitle){
