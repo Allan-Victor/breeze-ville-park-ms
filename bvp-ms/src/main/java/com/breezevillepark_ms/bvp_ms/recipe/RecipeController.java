@@ -33,7 +33,7 @@ public class RecipeController {
     }
 
     @GetMapping("/{recipe-title}")
-    public ResponseEntity<RecipeResponse> getRecipeByName(@PathVariable("recipe-title") String recipeTitle){
+    public ResponseEntity<RecipeResponse> getRecipeByName(@RequestParam(name = "recipe_title") String recipeTitle){
         return ok(recipeService.findByName(recipeTitle));
     }
 
@@ -44,7 +44,7 @@ public class RecipeController {
 
     @DeleteMapping("/delete/{recipeId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<?> deleteRecipe(@PathVariable("customerId") Integer recipeId){
+    public ResponseEntity<?> deleteRecipe(@PathVariable("recipeId") Integer recipeId){
         recipeService.removeRecipeById(recipeId);
         return ResponseEntity.accepted().build();
     }

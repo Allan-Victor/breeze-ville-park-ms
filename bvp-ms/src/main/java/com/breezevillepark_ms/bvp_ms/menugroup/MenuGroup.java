@@ -27,6 +27,8 @@ public class MenuGroup extends BaseEntity {
     private Integer menuGroupId;
 
     private String description;
+
+    @Column(unique = true)
     private String groupTitle;
 
     @OneToMany(mappedBy = "groups")
