@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,12 +18,14 @@ import static org.springframework.http.ResponseEntity.ok;
 @RestController
 @RequestMapping("management")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
 public class ManagementController {
     private final EmployeeService employeeService;
     private final SettingService settingService;
 
 
     @PostMapping("/employee/add")
+    @PreAuthorize("hasAuthority('admin:create')")
     public ResponseEntity<Integer> createEmployee(@Valid @RequestBody EmployeeCreationRequest creationRequest){
         return ok(employeeService.addEmployee(creationRequest));
     }

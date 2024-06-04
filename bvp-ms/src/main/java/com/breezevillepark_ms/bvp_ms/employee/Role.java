@@ -12,10 +12,18 @@ import static com.breezevillepark_ms.bvp_ms.employee.Permission.*;
 
 @RequiredArgsConstructor
 public enum Role {
-    MANAGER(Collections.emptySet()),
+    MANAGER(Set.of(
+            MANAGER_CREATE,
+            MANAGER_READ,
+            MANAGER_UPDATE,
+            MANAGER_DELETE)),
     RECEPTIONIST(Collections.emptySet()),
     CASHIER(Collections.emptySet()),
-    CHEF(Collections.emptySet()),
+    CHEF(Set.of(
+            CHEF_CREATE,
+            CHEF_READ,
+            CHEF_UPDATE,
+            CHEF_DELETE)),
     USER(Collections.emptySet()),
     ADMIN(Set.of(
             ADMIN_CREATE,

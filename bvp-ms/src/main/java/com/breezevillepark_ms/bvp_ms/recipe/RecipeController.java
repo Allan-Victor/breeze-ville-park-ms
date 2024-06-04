@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -14,6 +15,7 @@ import static org.springframework.http.ResponseEntity.*;
 @RestController
 @RequestMapping("recipes")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('CHEF','MANAGER')")
 public class RecipeController {
     private final RecipeService recipeService;
     private final RecipeMaterialService recipeMaterialService;
