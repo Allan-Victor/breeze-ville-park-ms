@@ -1,5 +1,6 @@
 package com.breezevillepark_ms.bvp_ms.management;
 
+import com.breezevillepark_ms.bvp_ms.common.NinValidator;
 import com.breezevillepark_ms.bvp_ms.common.PhoneNumberValidator;
 import com.breezevillepark_ms.bvp_ms.employee.Employee;
 import lombok.RequiredArgsConstructor;
@@ -11,11 +12,21 @@ import org.springframework.stereotype.Component;
 public class EmployeeMapper {
     private final PasswordEncoder encoder;
     private final PhoneNumberValidator validator;
-    public Employee toEmployee(EmployeeCreationRequest creationRequest){
-        String phoneNumber = creationRequest.phoneNumber();
+    private final NinValidator ninValidator;
+
+    public void validateNin(String nin){
+        if (!ninValidator.test(nin)){
+            throw new IllegalStateException("Nin" + nin + " is not valid");
+        }
+    }
+    public void validatePhoneNumber(String phoneNumber){
         if (!validator.test(phoneNumber)) {
             throw new IllegalStateException("Phone Number " + phoneNumber + " is not valid");
         }
+    }
+    public Employee toEmployee(EmployeeCreationRequest creationRequest){
+        validatePhoneNumber(creationRequest.phoneNumber());
+        validateNin(creationRequest.nin());
         return Employee.builder()
                 .firstName(creationRequest.firstName())
                 .lastName(creationRequest.lastName())
@@ -23,10 +34,11 @@ public class EmployeeMapper {
                 .gender(creationRequest.gender())
                 .joinedDate(creationRequest.joinedDate())
                 .nin(creationRequest.nin())
-                .phoneNumber(phoneNumber)
+                .phoneNumber(creationRequest.phoneNumber())
                 .password(encoder.encode(creationRequest.password()))
                 .role(creationRequest.role())
                 .dateOfBirth(creationRequest.dateOfBirth())
+                .salary(creationRequest.salary())
                 .academicQualifications(creationRequest.academicQualifications())
                 .build();
     }
@@ -44,6 +56,7 @@ public class EmployeeMapper {
                 .password(employee.getPassword())
                 .role(employee.getRole())
                 .dateOfBirth(employee.getDateOfBirth())
+                .payments(employee.getPayments())
                 .orders(employee.getOrders())
                 .salary(employee.getSalary())
                 .academicQualifications(employee.getAcademicQualifications())
@@ -51,10 +64,8 @@ public class EmployeeMapper {
     }
 
     public Employee fromUpdateRequest(EmployeeUpdateRequest employeeUpdateRequest){
-        String phoneNumber = employeeUpdateRequest.phoneNumber();
-        if (!validator.test(phoneNumber)) {
-            throw new IllegalStateException("Phone Number " + phoneNumber + " is not valid");
-        }
+        validatePhoneNumber(employeeUpdateRequest.phoneNumber());
+        validateNin(employeeUpdateRequest.nin());
         return Employee.builder()
                 .employeeId(employeeUpdateRequest.id())
                 .firstName(employeeUpdateRequest.firstName())
@@ -63,7 +74,7 @@ public class EmployeeMapper {
                 .gender(employeeUpdateRequest.gender())
                 .joinedDate(employeeUpdateRequest.joinedDate())
                 .nin(employeeUpdateRequest.nin())
-                .phoneNumber(phoneNumber)
+                .phoneNumber(employeeUpdateRequest.phoneNumber())
                 .password(employeeUpdateRequest.password())
                 .role(employeeUpdateRequest.role())
                 .dateOfBirth(employeeUpdateRequest.dateOfBirth())
